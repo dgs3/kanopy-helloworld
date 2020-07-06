@@ -4,7 +4,7 @@ COPY requirements.txt /app/requirements.txt
 RUN pip install -r /app/requirements.txt
 
 ADD . /app
-EXPOSE 8080
+EXPOSE 5000
 
 ENTRYPOINT ["python"]
 CMD ["/app/app.py"]
