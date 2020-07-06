@@ -1,0 +1,50 @@
+env:
+  APP_MESSAGE: Hello, MongoDB!
+
+# envSecrets:
+#   APP_SECRET: my-secrets
+
+service:
+  targetPort: 5000
+
+ingress:
+  enabled: true
+  hosts:
+    - web-app-example.devops.staging.corp.mongodb.com
+
+resources:
+  limits:
+    cpu: 100m
+    memory: 64Mi
+  requests:
+    cpu: 10m
+    memory: 32Mi
+
+probes:
+  enabled: true
+  path: /liveness
+  headers: {}
+  liveness:
+    httpGet: true
+    initialDelaySeconds: 10
+    periodSeconds: 60
+    timeoutSeconds: 1
+    successThreshold: 1
+    failureThreshold: 3
+
+podAntiAffinity:
+  enabled: true
+  topologyKey: "kubernetes.io/hostname"
+  type: "soft"
+
+# Not necessary when using the horizontal pod autoscaler
+# replicaCount: 1
+
+autoscaling:
+  minReplicas: 2
+  maxReplicas: 5
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        targetAverageUtilization: 80
