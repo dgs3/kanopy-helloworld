@@ -1,7 +1,7 @@
 ---
 kind: pipeline
 type: kubernetes
-name: default
+name: kanopy-helloworld
 
 trigger:
   branch:
@@ -33,7 +33,7 @@ steps:
     client_only: true
     helm_repos: mongodb=https://10gen.github.io/helm-charts
     namespace: corps
-    release: web-app-example
+    release: kanopy-helloworld
     tiller_ns: corps
     values: image.tag=git-${DRONE_COMMIT_SHA:0:7},image.repository=795250896452.dkr.ecr.us-east-1.amazonaws.com/corps/${DRONE_REPO_NAME}
     api_server: https://api.staging.corp.mongodb.com
